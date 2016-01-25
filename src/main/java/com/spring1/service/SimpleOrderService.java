@@ -4,15 +4,18 @@ import com.spring1.domain.Customer;
 import com.spring1.domain.Order;
 import com.spring1.domain.Pizza;
 import com.spring1.repository.OrderRepository;
-import com.spring1.servicelocator.ServiceLocatorFactory;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleOrderService implements OrderService {
     
-    private ServiceLocatorFactory factory= ServiceLocatorFactory.getInstance();
-    private OrderRepository orderRepository = (OrderRepository)factory.create("orderRepository");
-    private PizzaService pizzaService = (PizzaService)factory.create("pizzaService");
+    private final OrderRepository orderRepository;
+    private final PizzaService pizzaService;
+
+    public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService) {
+        this.orderRepository = orderRepository;
+        this.pizzaService = pizzaService;
+    }
     
     @Override
     public Order placeNewOrder(Customer customer, Integer ... pizzasID) {
