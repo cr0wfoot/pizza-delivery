@@ -1,9 +1,12 @@
 package com.spring1.context.ioc;
 
+import com.spring1.context.annotations.PostCreate;
 import com.spring1.context.config.Config;
+import com.spring1.context.ioc.proxy.Proxy1;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,63 +29,75 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         if(bean != null)
             return bean;
         
-        
         BeanBuilder builder = new BeanBuilder(type);
         builder.construct();
-        builder.afterConstruct();
         builder.createProxy();
+        builder.callPostCreateMethod();
+        builder.callInitMethod();
         bean = builder.build();
-        
-        
-        
+
         beans.put(beanName,bean);
             
         return bean;
     }
     
     class BeanBuilder {
+        
         Class<?> type;
         Object bean;
+        
         public BeanBuilder(Class<?> type) {
             this.type = type;
         }
+        
         public void construct() throws Exception {
             Constructor<?> constructor = type.getConstructors()[0];
-            Class<?>[] paramTypes = constructor.getParameterTypes();
-            if(paramTypes.length == 0) 
+            if(constructor.getParameterTypes().length == 0) 
                 bean = type.newInstance();
             else {
-                Object[] params = new Object[paramTypes.length];
-                for(int i = 0; i < params.length; i++) {
-                    String beanName = paramTypes[i].getSimpleName();
-                    char[] arrayOfChars = beanName.toCharArray();
-                    arrayOfChars[0] += 32;
-                    params[i] = getBean(String.valueOf(arrayOfChars));
-                }
-                bean = constructor.newInstance(params);
+                bean = newParamsInstance(constructor);
             }
         }
-        public void afterConstruct() throws Exception {
+        
+        private Object newParamsInstance(Constructor<?> constructor) throws Exception {
+            Class<?>[] paramTypes = constructor.getParameterTypes();
+            Object[] params = new Object[paramTypes.length];
+            for (int i = 0; i < params.length; i++) {
+                String beanName = paramTypes[i].getSimpleName();
+                params[i] = getBean(Character.toLowerCase(beanName.charAt(0)) + beanName.substring(1));
+            }
+            return constructor.newInstance(params);
+        }
+
+        public void callPostCreateMethod() throws Exception {
             Class<?> clazz = bean.getClass();
             Method[] methods = clazz.getDeclaredMethods();
-            Method initMethod = null;
             for (Method m : methods) {
                 if(m.isAnnotationPresent(PostCreate.class)) {
                     m.invoke(bean);
-                    continue;
                 }
-                if(initMethod == null && m.getName().equals("init"))
-                    initMethod = m;
             }
-            if(initMethod != null)
-                initMethod.invoke(bean);
-        } 
-        public void createProxy() {
-            
         }
+        
+        public void callInitMethod() throws Exception {
+            Class<?> clazz = bean.getClass();
+            Method[] methods = clazz.getDeclaredMethods();
+            for (Method m : methods) {
+                if(m.getName().equals("init") && !m.isAnnotationPresent(PostCreate.class)) {
+                    m.invoke(bean);
+                    break;
+                }
+            }
+        }
+        
+        public void createProxy() {
+            bean = new Proxy1().createProxy(bean);
+        }
+        
         public Object build() {
             return bean;
         }
+        
     }
     
 }

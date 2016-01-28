@@ -31,7 +31,8 @@ public class DeliveryApp {
         OrderRepository orderRepository = (OrderRepository) context.getBean("orderRepository");
         PizzaRepository pizzaRepository = (PizzaRepository) context.getBean("pizzaRepository");
         PizzaService pizzaService = (PizzaService) context.getBean("pizzaService");
-        System.out.println(pizzaRepository.find(3));
-        //OrderService orderService = (OrderService) context.getBean("orderService");
+        OrderService orderService = (OrderService) context.getBean("orderService");
+        System.out.println(pizzaRepository.find(1));
+        
     }
 }

@@ -1,6 +1,7 @@
 package com.spring1.repository;
 
-import com.spring1.context.ioc.PostCreate;
+import com.spring1.context.annotations.BenchMark;
+import com.spring1.context.annotations.PostCreate;
 import com.spring1.domain.Pizza;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class InMemPizzaRepository implements PizzaRepository {
         return newPizza;
     }
 
+    @BenchMark
     public Pizza find(Integer id) {
         return pizzas.get(id);
     }
