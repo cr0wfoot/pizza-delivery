@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-public class Proxy1 {
+public class ProxyForBenchMark {
     
     public Object createProxy(Object o) {
         Method[] methods = o.getClass().getMethods();

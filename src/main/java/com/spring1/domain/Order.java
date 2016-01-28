@@ -7,20 +7,42 @@ public class Order {
     private Integer id;
     private Customer customer;
     private List<Pizza> pizzas;
+    private Double price;
+    private OrderState state;
 
     public Order() {
         
     }
 
-    public Order(Customer customer, List<Pizza> pizzas) {
+    public Order(Customer customer, List<Pizza> pizzas, OrderState state, Double price) {
         this.customer = customer;
         this.pizzas = pizzas;
+        this.price = price;
+        this.state = state;
     }
 
-    public Order(Integer id, Customer customer, List<Pizza> pizzas) {
+    public Order(Integer id, Customer customer, List<Pizza> pizzas, Double price, OrderState state) {
         this.id = id;
         this.customer = customer;
         this.pizzas = pizzas;
+        this.price = price;
+        this.state = state;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+    
+    public OrderState getState() {
+        return state;
+    }
+    
+    public void setState(OrderState state) {
+        this.state = state;
     }
     
     /**

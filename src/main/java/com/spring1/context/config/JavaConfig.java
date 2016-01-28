@@ -1,7 +1,9 @@
 package com.spring1.context.config;
 
+import com.spring1.repository.InMemDiscountCardRepository;
 import com.spring1.repository.InMemOrderRepository;
 import com.spring1.repository.InMemPizzaRepository;
+import com.spring1.service.SimpleDiscountCardService;
 import com.spring1.service.SimpleOrderService;
 import com.spring1.service.SimplePizzaService;
 import java.util.HashMap;
@@ -14,8 +16,10 @@ public class JavaConfig implements Config {
     public JavaConfig() {
         ifc2Class.put("pizzaRepository", InMemPizzaRepository.class);
         ifc2Class.put("orderRepository", InMemOrderRepository.class);
+        ifc2Class.put("orderService", InMemDiscountCardRepository.class);
         ifc2Class.put("pizzaService", SimplePizzaService.class);
         ifc2Class.put("orderService", SimpleOrderService.class);
+        ifc2Class.put("orderService", SimpleDiscountCardService.class);
     }
 
     

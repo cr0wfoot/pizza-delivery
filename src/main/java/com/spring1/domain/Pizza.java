@@ -1,5 +1,7 @@
 package com.spring1.domain;
 
+import java.util.Comparator;
+
 public class Pizza {
     
     private Integer id;
@@ -94,6 +96,15 @@ public class Pizza {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public static Comparator<Pizza> compareByPrice() {
+	return new Comparator<Pizza>() {
+            @Override
+            public int compare(Pizza o1, Pizza o2) {
+		return Double.compare(o1.getPrice(), o2.getPrice()) * -1;
+            }
+	};
     }
 
     @Override

@@ -2,17 +2,11 @@ package com.spring1.context.ioc;
 
 import com.spring1.context.annotations.PostCreate;
 import com.spring1.context.config.Config;
-import com.spring1.context.ioc.proxy.Proxy1;
-import java.lang.annotation.Annotation;
+import com.spring1.context.ioc.proxy.ProxyForBenchMark;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class JavaConfigApplicationContext implements ApplicationContext {
     
@@ -31,9 +25,9 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         
         BeanBuilder builder = new BeanBuilder(type);
         builder.construct();
-        builder.createProxy();
         builder.callPostCreateMethod();
         builder.callInitMethod();
+        builder.createProxy();
         bean = builder.build();
 
         beans.put(beanName,bean);
@@ -91,7 +85,7 @@ public class JavaConfigApplicationContext implements ApplicationContext {
         }
         
         public void createProxy() {
-            bean = new Proxy1().createProxy(bean);
+            bean = new ProxyForBenchMark().createProxy(bean);
         }
         
         public Object build() {
