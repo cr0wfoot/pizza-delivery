@@ -10,4 +10,6 @@ public interface OrderService {
     
     boolean placeNewOrder(Customer customer, Integer... pizzasID);
     
+    boolean addPizzasToOrder(Order order, Integer ... pizzasId);
+    
 }

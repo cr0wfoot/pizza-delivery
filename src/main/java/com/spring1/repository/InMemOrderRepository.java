@@ -12,5 +12,13 @@ public class InMemOrderRepository implements OrderRepository {
         orders.put(newOrder.getId(), newOrder);
         return newOrder;
     }
+
+    public Order find(Integer id) {
+        return orders.get(id);
+    }
+
+    public void update(Order order) {
+        orders.put(order.getId(), order);
+    }
     
 }

@@ -6,4 +6,8 @@ public interface OrderRepository {
     
     Order save(Order newOrder);
     
+    Order find(Integer id);
+    
+    void update(Order order);
+    
 }

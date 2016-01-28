@@ -38,12 +38,9 @@ public class SimpleOrderService implements OrderService {
     }
     
     @Override
-    public boolean placeNewOrder(Customer customer, Integer ... pizzasID) {
+    public boolean placeNewOrder(Customer customer, Integer ... pizzasId) {
        
-        List<Pizza> pizzas = getPizzasByIds(pizzasID);
-        
-        if(!checkPizzasRestrictions(pizzas))
-            return false;
+        List<Pizza> pizzas = getPizzasByIds(pizzasId);
         
         Double totalPrice = calculateTotalPriceWithAllDiscounts(pizzas, customer);
         
@@ -57,15 +54,18 @@ public class SimpleOrderService implements OrderService {
         
     }
     
+    public boolean addPizzasToOrder(Order order, Integer ... pizzasId) {
+        if(pizzasId.length >= MIN_PIZZAS_COUNT && pizzasId.length <= MAX_PIZZAS_COUNT)
+            return false;
+        List<Pizza> pizzas = getPizzasByIds(pizzasId);
+        order.addPizzas(pizzas);
+        orderRepository.update(order);
+        return true;
+    }
+    
     private void sumPriceToDiscountCard(Customer customer, Double price) {
         if(customer.isDiscountCardExists())
             discountCardService.updatePoints(customer.getDiscountCard(), price);
-    }
-
-    private boolean checkPizzasRestrictions(List<Pizza> pizzas) {
-        if(pizzas.size() >= MIN_PIZZAS_COUNT && pizzas.size() <= MAX_PIZZAS_COUNT)
-             return true;
-        else return false;
     }
     
     private Double calculateTotalPriceWithAllDiscounts(List<Pizza> pizzas, Customer customer) {

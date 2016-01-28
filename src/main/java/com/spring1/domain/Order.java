@@ -62,6 +62,10 @@ public class Order {
     public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
     }
+    
+    public void addPizzas(List<Pizza> pizzas) {
+        this.pizzas.addAll(pizzas);
+    }
 
     /**
      * Get the value of customer
