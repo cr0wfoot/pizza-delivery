@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+          http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/context/spring-context-2.5.xsd/spring-spring-context-2.5.xsd-4.2.4.RELEASE.xsd
+">
+
+    <bean id="pizzaRepository" class="com.spring1.repository.InMemPizzaRepository" init-method="init" >
+        <property name="pizzas">
+            <map>
+                <entry key="1">
+                    <bean class="com.spring1.domain.Pizza">
+                        <constructor-arg value="1"/>
+                        <constructor-arg value="Sea"/>
+                        <constructor-arg value="SEA"/>
+                    </bean>    
+                </entry>
+                <entry key="2">
+                    <bean class="com.spring1.domain.Pizza">
+                        <constructor-arg value="2"/>
+                        <constructor-arg value="Meat"/>
+                        <constructor-arg value="MEAT"/>
+                    </bean>    
+                </entry>
+            </map>
+        </property>      
+    </bean>
+    <bean id="orderRepository" class="com.spring1.repository.InMemOrderRepository" />
+    
+
+</beans>

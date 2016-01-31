@@ -8,7 +8,7 @@ public class InMemOrderRepository implements OrderRepository {
 
     private final Map<Integer, Order> orders = new HashMap<Integer, Order>();
     
-    public Order save(Order newOrder) {
+    public Order insert(Order newOrder) {
         orders.put(newOrder.getId(), newOrder);
         return newOrder;
     }
@@ -17,7 +17,7 @@ public class InMemOrderRepository implements OrderRepository {
         return orders.get(id);
     }
 
-    public void update(Order order) {
+    public void save(Order order) {
         orders.put(order.getId(), order);
     }
     

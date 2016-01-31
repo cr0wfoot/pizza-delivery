@@ -4,10 +4,10 @@ import com.spring1.domain.Order;
 
 public interface OrderRepository {
     
-    Order save(Order newOrder);
+    Order insert(Order newOrder);
     
     Order find(Integer id);
     
-    void update(Order order);
+    void save(Order order);
     
 }

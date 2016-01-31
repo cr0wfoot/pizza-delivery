@@ -11,12 +11,4 @@ public interface PizzaRepository {
     @BenchMark
     Pizza find(Integer id);
     
-    void init();
-    
-    @PostCreate
-    void first();
-    
-    @PostCreate
-    void second();
-    
 }

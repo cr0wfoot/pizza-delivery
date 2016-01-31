@@ -8,6 +8,23 @@
 ">
     
     
-    <bean id="pizzaRepository" class="com.spring1.repository.InMemPizzaRepository" init-method="init" />
+    <bean id="pizzaService" class="com.spring1.service.SimplePizzaService">
+        <constructor-arg ref="pizzaRepository" />
+    </bean>
+    <bean id="orderService" class="com.spring1.service.SimpleOrderService">
+        <constructor-arg ref="orderRepository" />
+        <constructor-arg ref="pizzaService" />
+    </bean>
+    
+    <bean name="newCustomer" class="com.spring1.domain.Customer">
+        <constructor-arg value="Andrii" />
+        <property name="address">
+            <bean class="com.spring1.domain.Address">
+                <constructor-arg value="Kiev" />
+            </bean>
+        </property>
+    </bean>
+    
+    
 
 </beans>

@@ -7,6 +7,10 @@ public class Address {
     private String street;
     private String appartment;
 
+    public Address(String city) {
+        this.city = city;
+    }
+
     /**
      * Get the value of appartment
      *

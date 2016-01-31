@@ -4,6 +4,9 @@ import java.util.List;
 
 public class Order {
 
+    private static final int MIN_PIZZAS_COUNT = 1;
+    private static final int MAX_PIZZAS_COUNT = 10;
+    
     private Integer id;
     private Customer customer;
     private List<Pizza> pizzas;
@@ -14,19 +17,27 @@ public class Order {
         
     }
 
-    public Order(Customer customer, List<Pizza> pizzas, OrderState state, Double price) {
+    public Order(Customer customer, OrderState state) {
         this.customer = customer;
-        this.pizzas = pizzas;
-        this.price = price;
         this.state = state;
     }
 
-    public Order(Integer id, Customer customer, List<Pizza> pizzas, Double price, OrderState state) {
+    public Order(Integer id, Customer customer, OrderState state) {
         this.id = id;
         this.customer = customer;
-        this.pizzas = pizzas;
-        this.price = price;
         this.state = state;
+    }
+    
+    private Double calculateTotalPrice(List<Pizza> pizzas) {
+        Double totalPrice = 0.0;
+        for(Pizza p : pizzas)
+            totalPrice += p.getPrice();
+        return totalPrice;
+    }
+    
+    private void checkPizzasCountRestrictions(int size) {
+        if(size < MIN_PIZZAS_COUNT && size > MAX_PIZZAS_COUNT)
+            throw new IllegalArgumentException();
     }
 
     public Double getPrice() {
@@ -41,8 +52,9 @@ public class Order {
         return state;
     }
     
-    public void setState(OrderState state) {
-        this.state = state;
+    public void setState(OrderState stateToChange) {
+        if(this.state == null || this.state.getAvaliableStatesToChange().contains(stateToChange))
+            this.state = stateToChange;
     }
     
     /**
@@ -60,11 +72,15 @@ public class Order {
      * @param pizzas new value of pizzas
      */
     public void setPizzas(List<Pizza> pizzas) {
+        checkPizzasCountRestrictions(pizzas.size());
         this.pizzas = pizzas;
+        this.price = calculateTotalPrice(pizzas);
     }
     
     public void addPizzas(List<Pizza> pizzas) {
+        checkPizzasCountRestrictions(pizzas.size() + this.pizzas.size());
         this.pizzas.addAll(pizzas);
+        this.price = calculateTotalPrice(pizzas);
     }
 
     /**
