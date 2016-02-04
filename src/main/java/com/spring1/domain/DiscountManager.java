@@ -6,50 +6,47 @@ import java.util.List;
 public class DiscountManager {
     
     private static final int PIZZAS_COUNT_FOR_DISCOUNTS = 4;
-    private static final double DISCOUNT_FOR_MAX_PIZZA_COEFF = 0.7;
+    private static final double DISCOUNT_FOR_MAX_PIZZA_COEFF = 0.3;
     private static final double DISCOUNT_FOR_CARD_POINTS_COEFF = 0.1;
     private static final double MAX_AVALIABLE_POINTS_DISCOUNT_COEFF = 0.3;
-    
-    public void addPointsOnDiscountCard(Order order) {
-        DiscountCard card = order.getCustomer().getDiscountCard();
-        card.setPoints(card.getPoints() + order.getPrice());
+        
+    public Double getTotalDiscount(Order order) {
+        Double totalDiscount = 0.0;
+        
+        totalDiscount += calculateDiscountForTheBiggestPizza(order);
+        totalDiscount += calculateDiscountForDiscountCard(order);
+        
+        return totalDiscount;
     }
     
-    public void checkAndSetDiscountForTheBiggestPizza(Order order) {
-        Double newTotalPrice = 0.0;
+    private Double calculateDiscountForTheBiggestPizza(Order order) {
+        Double discount = 0.0;
         List<Pizza> pizzas = order.getPizzas();
         
         if(pizzas.size() <= PIZZAS_COUNT_FOR_DISCOUNTS)
-            return;
+            return 0.0;
         
         Collections.sort(pizzas, Pizza.compareByPrice());
         Double maxPrice = pizzas.get(0).getPrice();
-        for(Pizza p : pizzas) {
+        for(Pizza p : pizzas)
             if(p.getPrice() == maxPrice)
-                 newTotalPrice += maxPrice * DISCOUNT_FOR_MAX_PIZZA_COEFF;
-            else newTotalPrice += p.getPrice();
-        }
+                 discount += maxPrice * DISCOUNT_FOR_MAX_PIZZA_COEFF;
         
-        order.setPrice(newTotalPrice);
+        return discount;
     }
     
-    public void checkAndSetDiscountForDiscountCard(Order order) {
-        Double totalPrice = order.getPrice();
-        
+    private Double calculateDiscountForDiscountCard(Order order) {
+        Double discount = 0.0;
         Double discountForPoints;
+        
         if(order.getCustomer().isDiscountCardExists()) {
             discountForPoints = order.getCustomer().getDiscountCard().getPoints() * DISCOUNT_FOR_CARD_POINTS_COEFF;
-            if(discountForPoints > totalPrice * MAX_AVALIABLE_POINTS_DISCOUNT_COEFF)
-                 totalPrice -= totalPrice * MAX_AVALIABLE_POINTS_DISCOUNT_COEFF;
-            else totalPrice -= discountForPoints;
+            if(discountForPoints > order.getTotalPrice() * MAX_AVALIABLE_POINTS_DISCOUNT_COEFF)
+                 discount = order.getTotalPrice() * MAX_AVALIABLE_POINTS_DISCOUNT_COEFF;
+            else discount = discountForPoints;
         }
         
-        order.setPrice(totalPrice);
+        return discount;
     }
-    
-    public void withdrawPointsFromDiscountCard(Order order) {
-        DiscountCard card = order.getCustomer().getDiscountCard();
-        card.setPoints(card.getPoints() - order.getPrice());
-    }
-    
+        
 }

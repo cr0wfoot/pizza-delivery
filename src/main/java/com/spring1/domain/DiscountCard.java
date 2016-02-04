@@ -9,7 +9,7 @@ public class DiscountCard {
     public DiscountCard() {
     }
 
-    public DiscountCard(Customer customer, Integer id, Double points) {
+    public DiscountCard(Integer id, Customer customer, Double points) {
         this.customer = customer;
         this.id = id;
         this.points = points;

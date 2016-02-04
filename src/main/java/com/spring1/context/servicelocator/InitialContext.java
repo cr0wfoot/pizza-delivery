@@ -1,7 +1,7 @@
 package com.spring1.context.servicelocator;
 
-import com.spring1.context.config.Config;
-import com.spring1.context.config.JavaConfig;
+import com.spring1.context.ioc.config.Config;
+import com.spring1.context.ioc.config.JavaConfig;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

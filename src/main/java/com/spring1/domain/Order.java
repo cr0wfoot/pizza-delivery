@@ -1,51 +1,52 @@
 package com.spring1.domain;
 
+import com.spring1.context.annotations.BenchMark;
+import com.spring1.context.annotations.MyComponent;
+import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@MyComponent
 public class Order {
-
-    private static final int MIN_PIZZAS_COUNT = 1;
-    private static final int MAX_PIZZAS_COUNT = 10;
     
     private Integer id;
     private Customer customer;
-    private List<Pizza> pizzas;
-    private Double price;
+    private Double currentPrice;
     private OrderState state;
+    private List<Pizza> pizzas = new ArrayList<Pizza>();
 
     public Order() {
-        
+   
     }
-
-    public Order(Customer customer, OrderState state) {
+    
+    public Order(Customer customer, OrderState state, List<Pizza> pizzas) {
         this.customer = customer;
         this.state = state;
+        this.pizzas = pizzas;
     }
 
-    public Order(Integer id, Customer customer, OrderState state) {
+    public Order(Integer id, Customer customer, OrderState state, List<Pizza> pizzas) {
         this.id = id;
         this.customer = customer;
         this.state = state;
+        this.pizzas = pizzas;
     }
     
-    private Double calculateTotalPrice(List<Pizza> pizzas) {
+    public Double getTotalPrice() {
         Double totalPrice = 0.0;
         for(Pizza p : pizzas)
             totalPrice += p.getPrice();
         return totalPrice;
     }
-    
-    private void checkPizzasCountRestrictions(int size) {
-        if(size < MIN_PIZZAS_COUNT && size > MAX_PIZZAS_COUNT)
-            throw new IllegalArgumentException();
+
+    public Double getCurrentPrice() {
+        return currentPrice;
     }
 
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setCurrentPrice(Double price) {
+        this.currentPrice = price;
     }
     
     public OrderState getState() {
@@ -53,8 +54,7 @@ public class Order {
     }
     
     public void setState(OrderState stateToChange) {
-        if(this.state == null || this.state.getAvaliableStatesToChange().contains(stateToChange))
-            this.state = stateToChange;
+        this.state = stateToChange;
     }
     
     /**
@@ -65,22 +65,13 @@ public class Order {
     public List<Pizza> getPizzas() {
         return pizzas;
     }
-
-    /**
-     * Set the value of pizzas
-     *
-     * @param pizzas new value of pizzas
-     */
+    
     public void setPizzas(List<Pizza> pizzas) {
-        checkPizzasCountRestrictions(pizzas.size());
         this.pizzas = pizzas;
-        this.price = calculateTotalPrice(pizzas);
     }
     
     public void addPizzas(List<Pizza> pizzas) {
-        checkPizzasCountRestrictions(pizzas.size() + this.pizzas.size());
         this.pizzas.addAll(pizzas);
-        this.price = calculateTotalPrice(pizzas);
     }
 
     /**
@@ -120,11 +111,33 @@ public class Order {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+	int result = 1;
+	result = prime * result + id;
+	return result;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+        Order or = (Order) o;
+        if (id != or.id)
+            return false;
+        return true;
+    }
+    
+    @Override
     public String toString() {
         String pizzaz = "[";
         for(Pizza p : pizzas)
             pizzaz += "{" + p + "},";
-        return "id=" + id + " customer=" + customer.getName() + " pizzas=" + pizzaz + "]";
+        return "id=" + id + " customer=" + customer + " state" + state + " pizzas=" + pizzaz + "]";
     }
     
 }

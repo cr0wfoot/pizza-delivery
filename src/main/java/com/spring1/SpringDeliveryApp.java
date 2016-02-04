@@ -1,8 +1,7 @@
 package com.spring1;
 
 import com.spring1.domain.Customer;
-import com.spring1.repository.OrderRepository;
-import com.spring1.repository.PizzaRepository;
+import com.spring1.domain.DiscountCard;
 import com.spring1.service.OrderService;
 import com.spring1.service.PizzaService;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,17 +9,27 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SpringDeliveryApp {
     
-    public static void main( String[] args ) {
-        ConfigurableApplicationContext repCont = new ClassPathXmlApplicationContext("repositoryConfig.xml");
-        ConfigurableApplicationContext appCont = new ClassPathXmlApplicationContext(new String[]{"appConfig.xml"}, repCont);
-        PizzaRepository pizzaRepository = (PizzaRepository)repCont.getBean("pizzaRepository");
+    public static void main( String[] args ) {      
         
-        OrderRepository orderRepository = (OrderRepository) repCont.getBean("orderRepository");
-        PizzaService pizzaService = (PizzaService) appCont.getBean("pizzaService");
-        OrderService orderService = (OrderService) appCont.getBean("orderService");
-        System.out.println(pizzaRepository.find(1));
+        ConfigurableApplicationContext repContext = new ClassPathXmlApplicationContext("repositoryConfig.xml");
+        ConfigurableApplicationContext appContext = new ClassPathXmlApplicationContext(new String[] {"appConfig.xml"}, repContext);
+        System.out.println("\n======================================\n");
         
-        appCont.close();
+        //test find
+        PizzaService pizzaService = appContext.getBean("simplePizzaService", PizzaService.class);
+        System.out.println(pizzaService.find(2));
+        
+        //test placeNewOrder
+        OrderService orderService = appContext.getBean("simpleOrderService", OrderService.class);
+        Customer customer = new Customer();
+        customer.setDiscountCard(new DiscountCard(1, customer, 15.0));
+        orderService.placeNewOrder(customer, 1);
+        System.out.println(customer.getDiscountCard().getPoints());
+        System.out.println("\n======================================\n");
+        
+        //appContext.publishEvent(new ApplicationEvent(appContext){});
+        appContext.close();
+        repContext.close();        
     }
 
     

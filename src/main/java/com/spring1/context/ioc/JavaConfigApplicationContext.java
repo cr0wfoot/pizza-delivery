@@ -1,7 +1,7 @@
 package com.spring1.context.ioc;
 
 import com.spring1.context.annotations.PostCreate;
-import com.spring1.context.config.Config;
+import com.spring1.context.ioc.config.Config;
 import com.spring1.context.ioc.proxy.ProxyForBenchMark;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

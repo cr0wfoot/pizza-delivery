@@ -1,30 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-          http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/context/spring-context-2.5.xsd/spring-spring-context-2.5.xsd-4.2.4.RELEASE.xsd
-">
+    <context:component-scan base-package="com.spring1.service"/>
+    <context:component-scan base-package="com.spring1.domain">
+        <context:include-filter type="annotation" expression="com.spring1.context.annotations.MyComponent"/>
+    </context:component-scan>
     
+    <bean class="com.spring1.beanlifecyclebreak.BenchmarkBeanPostProcessor"/>
     
-    <bean id="pizzaService" class="com.spring1.service.SimplePizzaService">
-        <constructor-arg ref="pizzaRepository" />
-    </bean>
-    <bean id="orderService" class="com.spring1.service.SimpleOrderService">
-        <constructor-arg ref="orderRepository" />
-        <constructor-arg ref="pizzaService" />
-    </bean>
-    
-    <bean name="newCustomer" class="com.spring1.domain.Customer">
-        <constructor-arg value="Andrii" />
-        <property name="address">
-            <bean class="com.spring1.domain.Address">
-                <constructor-arg value="Kiev" />
-            </bean>
-        </property>
-    </bean>
-    
-    
-
 </beans>

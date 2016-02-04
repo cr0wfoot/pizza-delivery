@@ -1,17 +1,19 @@
 package com.spring1.service;
 
+import com.spring1.context.annotations.BenchMark;
 import com.spring1.domain.Pizza;
 import com.spring1.repository.PizzaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SimplePizzaService implements PizzaService {
 
-    private final PizzaRepository pizzaRepository;
+    @Autowired
+    private PizzaRepository pizzaRepository;
 
-    public SimplePizzaService(PizzaRepository pizzaRepository) {
-        this.pizzaRepository = pizzaRepository;
-    }
-    
-    public Pizza fing(Integer id) {
+    @BenchMark
+    public Pizza find(Integer id) {
         return pizzaRepository.find(id);
     }
     

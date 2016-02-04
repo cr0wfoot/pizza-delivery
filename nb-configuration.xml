@@ -9,6 +9,8 @@ Without this configuration present, some functionality in the IDE may be limited
         <config-files>
             <config-file>src/main/resources/appConfig.xml</config-file>
             <config-file>src/main/resources/repositoryConfig.xml</config-file>
+            <config-file>src/main/resources/test.xml</config-file>
+            <config-file>src/main/resources/test2.xml</config-file>
         </config-files>
         <config-file-groups/>
     </spring-data>

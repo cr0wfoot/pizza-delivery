@@ -1,33 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+<beans 
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-          http://www.springframework.org/schema/context/spring-context-2.5.xsd http://www.springframework.org/schema/context/spring-context-2.5.xsd/spring-spring-context-2.5.xsd-4.2.4.RELEASE.xsd
-">
-
-    <bean id="pizzaRepository" class="com.spring1.repository.InMemPizzaRepository" init-method="init" >
+    <context:component-scan base-package="com.spring1.repository"/>
+    
+    <bean name="pizzaRepository" class="com.spring1.repository.InMemPizzaRepository">
         <property name="pizzas">
             <map>
                 <entry key="1">
-                    <bean class="com.spring1.domain.Pizza">
-                        <constructor-arg value="1"/>
-                        <constructor-arg value="Sea"/>
-                        <constructor-arg value="SEA"/>
-                    </bean>    
+                    <bean name="pizzaFactoryBean" class="com.spring1.beanlifecyclebreak.PizzaFactoryBean"> 
+                        <property name="id" value="1"/>
+                        <property name="name" value="haski"/>
+                        <property name="type" value="SEA"/>
+                        <property name="price" value="1.0"/>
+                    </bean>
                 </entry>
                 <entry key="2">
-                    <bean class="com.spring1.domain.Pizza">
-                        <constructor-arg value="2"/>
-                        <constructor-arg value="Meat"/>
-                        <constructor-arg value="MEAT"/>
-                    </bean>    
+                    <bean name="pizzaFactoryBean" class="com.spring1.beanlifecyclebreak.PizzaFactoryBean"> 
+                        <property name="id" value="2"/>
+                        <property name="name" value="carbonara"/>
+                        <property name="type" value="VEGETARIAN"/>
+                        <property name="price" value="2.0"/>
+                    </bean>
+                </entry>
+                <entry key="3">
+                    <bean name="pizzaFactoryBean" class="com.spring1.beanlifecyclebreak.PizzaFactoryBean"> 
+                        <property name="id" value="3"/>
+                        <property name="name" value="paperoni"/>
+                        <property name="type" value="MEAT"/>
+                        <property name="price" value="3.0"/>
+                    </bean>
                 </entry>
             </map>
-        </property>      
+        </property>
     </bean>
-    <bean id="orderRepository" class="com.spring1.repository.InMemOrderRepository" />
     
-
+    <bean class="com.spring1.beanlifecyclebreak.BenchmarkBeanPostProcessor"/>
+    
+    <bean class="com.spring1.beanlifecyclebreak.CustomBeanFactoryPostProcessor"/>
+    <bean name="customer" class="com.spring1.domain.Customer">
+        <constructor-arg value="Name1"/>
+    </bean>
+    
 </beans>

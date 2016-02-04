@@ -1,4 +1,4 @@
-package com.spring1.context.config;
+package com.spring1.context.ioc.config;
 
 import com.spring1.repository.InMemOrderRepository;
 import com.spring1.repository.InMemPizzaRepository;

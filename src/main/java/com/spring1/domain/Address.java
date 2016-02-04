@@ -7,6 +7,9 @@ public class Address {
     private String street;
     private String appartment;
 
+    public Address() {
+    }
+    
     public Address(String city) {
         this.city = city;
     }
@@ -81,6 +84,11 @@ public class Address {
      */
     public void setCountry(String country) {
         this.country = country;
+    }
+    
+    @Override
+    public String toString() {
+        return "Address";
     }
 
 }

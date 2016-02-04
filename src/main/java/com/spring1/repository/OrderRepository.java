@@ -4,7 +4,7 @@ import com.spring1.domain.Order;
 
 public interface OrderRepository {
     
-    Order insert(Order newOrder);
+    Integer insert(Order newOrder);
     
     Order find(Integer id);
     

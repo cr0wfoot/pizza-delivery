@@ -7,9 +7,9 @@ public class Pizza {
     private Integer id;
     private String name;
     private Double price;
-    private Type type;
+    private PizzaType type;
 
-    public enum Type {
+    public enum PizzaType {
         VEGETARIAN, 
         SEA, 
         MEAT
@@ -18,7 +18,7 @@ public class Pizza {
     public Pizza() {
     }
 
-    public Pizza(Integer id, String name, Double price, Type type) {
+    public Pizza(Integer id, String name, Double price, PizzaType type) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -30,7 +30,7 @@ public class Pizza {
      *
      * @return the value of type
      */
-    public Type getType() {
+    public PizzaType getType() {
         return type;
     }
 
@@ -39,7 +39,7 @@ public class Pizza {
      *
      * @param type new value of type
      */
-    public void setType(Type type) {
+    public void setType(PizzaType type) {
         this.type = type;
     }
 
@@ -107,6 +107,28 @@ public class Pizza {
 	};
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+	int result = 1;
+	result = prime * result + id;
+	return result;
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+        Pizza p = (Pizza) o;
+        if (id != p.id)
+            return false;
+        return true;
+    }
+    
     @Override
     public String toString() {
         return "id=" + id + " name=" + name + " price=" + price + " type=" + type.toString();

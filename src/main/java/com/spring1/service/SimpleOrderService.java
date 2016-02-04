@@ -1,82 +1,112 @@
 package com.spring1.service;
 
+import com.spring1.context.annotations.BenchMark;
 import com.spring1.domain.*;
 import com.spring1.repository.OrderRepository;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SimpleOrderService implements OrderService {
     
-    private final OrderRepository orderRepository;
-    private final PizzaService pizzaService;
-
-    public SimpleOrderService(OrderRepository orderRepository, PizzaService pizzaService) {
-        this.orderRepository = orderRepository;
-        this.pizzaService = pizzaService;
-    }
+    @Autowired
+    private OrderRepository orderRepository;
+    
+    @Autowired
+    private PizzaService pizzaService;
+    
+    @Autowired
+    private DiscountCardService discountCardService;
+    
+    private static final int MAX_ACCEPTABLE_NUMBER_OF_PIZZAS = 10;
+    private static final int MIN_ACCEPTABLE_NUMBER_OF_PIZZAS = 1;
     
     @Override
     public boolean changeStateOfOrder(Order order, OrderState newState) {
-        
+        if(order == null || !order.getState().isAvaliableStateToChange(newState))
+            return false;
         order.setState(newState);
-        saveChanges(order);
-        
-        return order.getState().equals(newState);
-        
+        saveOrder(order);
+        return true;
     }
     
     @Override
+    @BenchMark
     public boolean placeNewOrder(Customer customer, Integer ... pizzasId) {
-       
-        DiscountManager discountManager = new DiscountManager();
+        if(customer == null || pizzasId == null) return false;
         List<Pizza> pizzas = getPizzasByIds(pizzasId);
+        
+        checkRestrictionsForPizzaNumber(pizzas.size());
                 
         Order newOrder = new Order();
         newOrder.setCustomer(customer);
         newOrder.setState(OrderState.NEW);
-        newOrder.setPizzas(pizzas);
+        newOrder.addPizzas(pizzas);
+        newOrder.setCurrentPrice(getPriceWithDiscounts(newOrder));
         
-        discountManager.checkAndSetDiscountForTheBiggestPizza(newOrder);
-        discountManager.checkAndSetDiscountForDiscountCard(newOrder);
-        discountManager.addPointsOnDiscountCard(newOrder);
-                
-        createOrder(newOrder); 
-        
+        chargePointsOnDiscountCard(customer, newOrder.getCurrentPrice());
+             
+        insertOrder(newOrder); 
         return true;
-        
     }
     
     @Override
     public boolean addPizzasToOrder(Order order, Integer ... pizzasId) {
-        
-        DiscountManager discountManager = new DiscountManager();
+        if(order == null || pizzasId == null) return false;
         List<Pizza> pizzas = getPizzasByIds(pizzasId);
+        Double oldPrice = order.getCurrentPrice();
         
+        checkRestrictionsForPizzaNumber(pizzas.size() + order.getPizzas().size());
         order.addPizzas(pizzas);
+        order.setCurrentPrice(getPriceWithDiscounts(order));
+        chargePointsOnDiscountCard(order.getCustomer(), order.getCurrentPrice() - oldPrice);
         
-        discountManager.withdrawPointsFromDiscountCard(order);
-        discountManager.checkAndSetDiscountForTheBiggestPizza(order);
-        discountManager.checkAndSetDiscountForDiscountCard(order);
-        discountManager.addPointsOnDiscountCard(order);
-        
-        saveChanges(order);
-        
+        saveOrder(order);
         return true;
     }
+    
+    @Lookup
+    private Order createOrder() {
+        return null;
+    }
+    
+    private void chargePointsOnDiscountCard(Customer customer, Double pointsToCharge) {
+        if (customer.isDiscountCardExists()) {
+            discountCardService.chargePoints(customer.getDiscountCard(), pointsToCharge);
+        }
+    }
+    
+    private Double getPriceWithDiscounts(Order order) {
+        DiscountManager discountManager = new DiscountManager();
+        Double totalDiscount = discountManager.getTotalDiscount(order);
+        return order.getTotalPrice() - totalDiscount;
+    }
+    
+    private void checkRestrictionsForPizzaNumber(int number) {
+        if(number < MIN_ACCEPTABLE_NUMBER_OF_PIZZAS)
+            throw new IllegalArgumentException();
+        if(number > MAX_ACCEPTABLE_NUMBER_OF_PIZZAS)
+            throw new IllegalArgumentException();
+    }
 
-    private void createOrder(Order newOrder) {
+    private void insertOrder(Order newOrder) {
         orderRepository.insert(newOrder);
     }
     
-    private void saveChanges(Order order) {
+    private void saveOrder(Order order) {
         orderRepository.save(order);
     }
     
-    private List<Pizza> getPizzasByIds(Integer...pizzasIds) {
+    private List<Pizza> getPizzasByIds(Integer...pizzasId) {
         List<Pizza> pizzas = new ArrayList<Pizza>();
-        for(Integer id : pizzasIds)
-            pizzas.add(pizzaService.fing(id));
+        Pizza pizza;
+        for(Integer id : pizzasId)
+            if((pizza = pizzaService.find(id)) != null)
+                pizzas.add(pizza);
         return pizzas;
     }
-    
+ 
 }

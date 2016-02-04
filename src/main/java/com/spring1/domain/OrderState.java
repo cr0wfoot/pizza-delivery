@@ -24,4 +24,9 @@ public enum OrderState {
             return permissions;
         }
         
+        public boolean isAvaliableStateToChange(OrderState stateToChange) {
+            if(stateToChange == null) return false;
+            return permissions.contains(stateToChange);
+        }
+        
     }

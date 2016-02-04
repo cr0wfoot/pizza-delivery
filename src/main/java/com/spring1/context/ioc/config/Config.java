@@ -1,4 +1,4 @@
-package com.spring1.context.config;
+package com.spring1.context.ioc.config;
 
 public interface Config {
 
