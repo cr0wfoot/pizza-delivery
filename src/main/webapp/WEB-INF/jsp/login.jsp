@@ -25,14 +25,14 @@
                     </div>
                 </c:if>
                 <div class="input-group input-sm">
-                    <spring:message code="entity.user.login" var="u.login"/>
+                    <spring:message code="entity.user.login" var="_login"/>
                     <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="${u.login}" required>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="${_login}" required>
                 </div>
                 <div class="input-group input-sm">
-                    <spring:message code="entity.user.pass" var="u.pass"/>
+                    <spring:message code="entity.user.pass" var="_pass"/>
                     <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label> 
-                    <input type="password" class="form-control" id="password" name="password" placeholder="${u.pass}" required>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="${_pass}" required>
                 </div>
 
                 <div class="form-actions">

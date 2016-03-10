@@ -31,14 +31,14 @@ public class CustomerDTOTest {
      * Test of isAddressExists method, of class CustomerDTO.
      */
     @Test
-    public void testIsAddressExists_FullAddressFields_ShouldReturnTrue() {
+    public void testIsAddressExists_FullAddressFields_ShouldReturnFalse() {
         instance.setAppartment("");
         instance.setCity("");
         instance.setStreet("");
  
         boolean result = instance.isAddressComplete();
         
-        assertTrue(result);
+        assertFalse(result);
     }
     
     /**

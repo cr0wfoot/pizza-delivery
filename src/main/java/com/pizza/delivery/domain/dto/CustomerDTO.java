@@ -7,10 +7,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class CustomerDTO {
     
-    @Pattern(regexp="^\\w$", message="Name can only consist of letters.")
+    @Pattern(regexp="^\\w{4,}$", message="Name can only consist of letters.")
     private String name;
     
-    @Pattern(regexp="^\\w$", message="City can only consist of letters.")
+    @Pattern(regexp="^\\w{4,}$", message="City can only consist of letters.")
     private String city;
     
     @Pattern(regexp="^\\w{4,}$", message="Street can only consist of numbers, letters and the underscore character.")
@@ -178,10 +178,12 @@ public class CustomerDTO {
     }
     
     public boolean isAddressComplete() {
-        return this.city != null && this.appartment != null && this.street != null;
+        return this.city != null && !this.city.isEmpty() && 
+               this.appartment != null && !this.appartment.isEmpty() && 
+               this.street != null && !this.street.isEmpty();
     }
     
-    public void fillDTOFromUser(User user) {
+    public void buildDTOWithUser(User user) {
         if(user == null) return;
         this.userId = user.getId();
         this.login = user.getLogin();

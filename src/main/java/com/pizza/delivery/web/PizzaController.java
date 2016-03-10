@@ -3,10 +3,14 @@ package com.pizza.delivery.web;
 import com.pizza.delivery.domain.Basket;
 import com.pizza.delivery.domain.dto.CustomerDTO;
 import com.pizza.delivery.domain.entities.Pizza;
+import com.pizza.delivery.domain.entities.Pizza.PizzaType;
 import com.pizza.delivery.service.PizzaService;
 import com.pizza.delivery.service.UserService;
+import java.util.Arrays;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,17 +25,17 @@ public class PizzaController {
     @Autowired
     private PizzaService pizzaService;
     
-    @Autowired
-    private UserService userService;
-    
     @ModelAttribute("pizza")
     public Pizza findPizza(@RequestParam(value = "id", required = false) Pizza pizza) {
         return pizza;
     }
     
+    //@Lookup
     @ModelAttribute
-    public Basket createBasket() {
-        return new Basket();
+    Basket createBasket() { return new Basket(); }
+    
+    private List<PizzaType> getPizzaTypes() {
+        return Arrays.asList(PizzaType.values());
     }
     
     @RequestMapping(value = "/pizzas", method = RequestMethod.GET)
@@ -47,7 +51,8 @@ public class PizzaController {
     }
     
     @RequestMapping(value="/create", method = RequestMethod.GET)
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("pizzaTypes", getPizzaTypes());
         return "pizzaform";
     }
     
@@ -64,6 +69,7 @@ public class PizzaController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String edit(Model model, Pizza pizza) {
         model.addAttribute("pizza", pizza);
+        model.addAttribute("pizzaTypes", getPizzaTypes());
         return "pizzaform";
     }
     

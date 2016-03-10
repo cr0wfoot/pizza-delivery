@@ -63,7 +63,6 @@ public class SimpleOrderService implements OrderService {
            basketOfPizzas == null || 
            !checkRestrictionsForPizzasQuantity(basketOfPizzas) || 
            !customerDto.isAddressComplete()) return;
-
         Customer customer;
         if(customerDto.getCustomerId() == null) {
             customer = customerService.createNewCustomer(customerDto);
@@ -109,6 +108,18 @@ public class SimpleOrderService implements OrderService {
     @Secured("ROLE_ADMIN")
     public List<PizzaOrder> showOrders() {
         return orderRepository.readAll();
+    }
+    
+    @Override
+    @Secured("ROLE_ADMIN")
+    public PizzaOrder showOrder(Long id) {
+        return orderRepository.read(id);
+    }
+    
+    @Override
+    @Secured("ROLE_ADMIN")
+    public PizzaOrder showOrder(Long id, boolean fetchLazy) {
+        return orderRepository.read(id, fetchLazy);
     }
     
     private void chargePointsToDiscountCard(Customer customer, Double orderPrice) {

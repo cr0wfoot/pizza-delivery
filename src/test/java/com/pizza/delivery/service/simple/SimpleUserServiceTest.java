@@ -44,12 +44,12 @@ public class SimpleUserServiceTest {
      * Test of findByLogin method, of class SimpleUserService.
      */
     @Test
-    public void testFindByLogin_Null_RepositoryMethodReadShouldNotBeInvoked() {
+    public void testFindByLogin_Null_RepositoryMethodReadShouldBeInvoked() {
         String login = null;
         
         instance.findByLogin(login);
         
-        verify(repository, never()).findByLogin(login);
+        verify(repository).findByLogin(login);
     }
     
     /**

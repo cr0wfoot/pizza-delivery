@@ -9,6 +9,8 @@ public interface CustomerRepository {
     
     Customer read(Long id);
     
+    Customer read(Long id, boolean fetchLazy);
+    
     void update(Customer customer);
     
     List<Customer> readAll();

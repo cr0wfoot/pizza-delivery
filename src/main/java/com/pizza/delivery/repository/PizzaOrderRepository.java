@@ -9,6 +9,8 @@ public interface PizzaOrderRepository {
     
     PizzaOrder read(Long id);
     
+    PizzaOrder read(Long id, boolean fetchLazy);
+    
     void update(PizzaOrder order);
     
     List<PizzaOrder> readAll();

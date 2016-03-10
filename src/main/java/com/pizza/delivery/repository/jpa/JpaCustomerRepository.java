@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class JpaCustomerRepository implements CustomerRepository {
+    
+    private static final boolean FETCH_TYPE_LAZY = true;
 
     @PersistenceContext
     private EntityManager em;
@@ -25,22 +27,28 @@ public class JpaCustomerRepository implements CustomerRepository {
     @Override
     @Transactional(readOnly = true)
     public Customer read(Long id) {
-        if(id == null || id <= 0) {
-            return null;
+        return readHelper(id, FETCH_TYPE_LAZY);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Customer read(Long id, boolean fetchLazy) {
+        return readHelper(id, fetchLazy);
+    }
+    
+    private Customer readHelper(Long id, boolean fetchLazy) {
+        if(id == null || id <= 0) { return null; }
+        if(fetchLazy) {
+            return em.find(Customer.class, id);
+        } else {
+            return em.createNamedQuery("Customer.getByIdFetchEager", Customer.class).setParameter("id", id).getSingleResult();
         }
-        Customer customer = em.find(Customer.class, id);
-        String.valueOf(customer.getAddress());
-        String.valueOf(customer.getCard());
-        String.valueOf(customer.getOrders());
-        return customer;
     }
     
     @Override
     @Transactional
     public void update(Customer customer) {
-        if(customer == null){
-            return;
-        }
+        if(customer == null){ return; }
         em.merge(customer);
     }
 
@@ -52,9 +60,7 @@ public class JpaCustomerRepository implements CustomerRepository {
     @Override
     @Transactional
     public void delete(Long id) {
-        if(id == null || id <= 0) {
-            return;
-        }
+        if(id == null || id <= 0) { return; }
         em.remove(em.find(Customer.class, id));
     }
     

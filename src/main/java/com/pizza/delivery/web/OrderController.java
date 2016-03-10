@@ -30,7 +30,7 @@ public class OrderController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@ModelAttribute("customerDto") CustomerDTO dto, @ModelAttribute Basket basket) {
         orderService.placeNewOrder(dto, basket);
-        return "redirect:pizza/pizzas";
+        return "redirect:/pizza/pizzas";
     }
     
     @RequestMapping(value = "/newstate", method = RequestMethod.GET)

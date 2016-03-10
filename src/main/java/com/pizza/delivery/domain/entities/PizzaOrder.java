@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "orders")
 @NamedQueries({
     @NamedQuery(name = "PizzaOrder.getAll", query = "select po from PizzaOrder po"),
+    @NamedQuery(name = "PizzaOrder.getByIdFetchEager", query = "select po from PizzaOrder po join fetch po.address join fetch po.details where po.id = :id"),
     @NamedQuery(name = "PizzaOrder.deleteById", query = "delete from PizzaOrder where id = :id")})
 public class PizzaOrder {
     
@@ -25,7 +26,7 @@ public class PizzaOrder {
     @Column(name = "price")
     private Double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
     

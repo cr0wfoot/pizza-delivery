@@ -1,9 +1,9 @@
 package com.pizza.delivery.domain.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.NumberFormat;
 
 /**
  * Entity: pizza
@@ -28,7 +28,7 @@ public class Pizza {
     private String name;
     
     @Column(name = "price")
-    @NumberFormat(pattern="##.##")
+    @Digits(message = "Format must be xxx.xx", fraction = 2, integer = 3)
     private Double price;
     
     @Column(name = "type")

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class JpaPizzaOrderRepository implements PizzaOrderRepository {
+    
+    private static final boolean FETCH_TYPE_LAZY = true;
 
     @PersistenceContext
     private EntityManager em;
@@ -21,17 +23,26 @@ public class JpaPizzaOrderRepository implements PizzaOrderRepository {
         em.flush();
         return order.getId();
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public PizzaOrder read(Long id) {
-        if(id == null || id <= 0) {
-            return null;
+        return readHelper(id, FETCH_TYPE_LAZY);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public PizzaOrder read(Long id, boolean fetchLazy) {
+        return readHelper(id, fetchLazy);
+    }
+    
+    private PizzaOrder readHelper(Long id, boolean fetchLazy) {
+        if(id == null || id <= 0) { return null; }
+        if(fetchLazy) {
+            return em.find(PizzaOrder.class, id);
+        } else {
+            return em.createNamedQuery("PizzaOrder.getByIdFetchEager", PizzaOrder.class).setParameter("id", id).getSingleResult();
         }
-        PizzaOrder order = em.find(PizzaOrder.class, id);
-        String.valueOf(order.getCustomer());
-        String.valueOf(order.getDetails());
-        return order;
     }
 
     @Override

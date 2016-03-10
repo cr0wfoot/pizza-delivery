@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +16,10 @@
         <br>
         <div class="container">
             <div class="panel panel-primary">
-                <div class="panel-heading"><spring:message code="basket.total.price" />: ${basket.price}</div>
+                <div class="panel-heading">
+                    <spring:message code="basket.total.price" />:
+                    <fmt:formatNumber value="${basket.price}" maxFractionDigits="2" />
+                </div>
                 <table class="panel-body table table-striped table-bordered table-hover">
                     <thead class="thead-inverse">
                         <tr>
@@ -49,16 +53,16 @@
             </div>   
             <form:form action="${pageContext.request.contextPath}/order/create" method="post" commandName="customerDto">
                 
-                <spring:message code="entity.address.city" var="a.city"/>
-                <form:input type="edit" name="city" path="city"  placeholder="${a.city}"  />
+                <spring:message code="entity.address.city" var="_city"/>
+                <form:input type="edit" name="city" path="city"  placeholder="${_city}"  />
                 <form:errors path="city"/>
                 
-                <spring:message code="entity.address.street" var="a.street"/>
-                <form:input type="edit" name="street" path="street"  placeholder="${a.street}"  />
+                <spring:message code="entity.address.street" var="_street"/>
+                <form:input type="edit" name="street" path="street"  placeholder="${_street}"  />
                 <form:errors path="street"/>
                 
-                <spring:message code="entity.address.appartment" var="a.appartment"/>
-                <form:input type="edit" name="appartment" path="appartment"  placeholder="${a.appartment}"  />
+                <spring:message code="entity.address.appartment" var="_appartment"/>
+                <form:input type="edit" name="appartment" path="appartment"  placeholder="${_appartment}"  />
                 <form:errors path="appartment"/>
                 
                 <input type="submit" name="order" value="<spring:message code="button.make.order" />" />

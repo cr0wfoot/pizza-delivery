@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Table(name = "customers")
 @NamedQueries({
     @NamedQuery(name = "Customer.getAll", query = "select c from Customer c"),
+    @NamedQuery(name = "Customer.getByIdFetchEager", query = "select c from Customer c join fetch c.orders where c.id = :id"),
     @NamedQuery(name = "Customer.deleteById", query = "delete from Customer where id = :id")})
 public class Customer {
     

@@ -18,8 +18,8 @@ public class CustomerDTOControllerAdvice {
     public CustomerDTO getDto(Principal principal) {
         CustomerDTO customerDto = new CustomerDTO();
         if(principal != null) {
-            User user = userService.findByLogin(principal.getName());
-            customerDto.fillDTOFromUser(user);
+            User user = userService.findByLogin(principal.getName(), false);
+            customerDto.buildDTOWithUser(user);
         }
         return customerDto;
     }

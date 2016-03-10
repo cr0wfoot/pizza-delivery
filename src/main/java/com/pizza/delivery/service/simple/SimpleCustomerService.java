@@ -21,6 +21,11 @@ public class SimpleCustomerService implements CustomerService {
     public Customer find(Long id) {
         return customerRepository.read(id);
     }
+    
+    @Override
+    public Customer find(Long id, boolean fetchLazy) {
+        return customerRepository.read(id, fetchLazy);
+    }
 
     @Override
     public List<Customer> findAll() {

@@ -19,46 +19,46 @@
                 <div class="panel-body">
                     <form:form action="accept" method="post" class="form-inline navbar-form navbar-left" commandName="customerDto">
                         <div class="form-group">
-                            <spring:message code="entity.user.login" var="u.login"/>
-                            <label class="sr-only" for="inputLogin">${u.login}</label>
-                            <form:input type="text" name="login" path="login" class="form-control" placeholder="${u.login}" id="inputLogin" />
+                            <spring:message code="entity.user.login" var="_login"/>
+                            <label class="sr-only" for="inputLogin">${_login}</label>
+                            <form:input type="text" name="login" path="login" class="form-control" placeholder="${_login}" id="inputLogin" />
                             <form:errors path="login"/>
                         </div>
                         <div class="form-group">
-                            <spring:message code="entity.user.pass" var="u.pass"/>
-                            <label class="sr-only" for="inputPasswrd">${u.pass}</label>
-                            <form:input type="text" name="pass" path="pass" class="form-control" placeholder="${u.pass}" id="inputPasswrd" />
+                            <spring:message code="entity.user.pass" var="_pass"/>
+                            <label class="sr-only" for="inputPasswrd">${_pass}</label>
+                            <form:input type="text" name="pass" path="pass" class="form-control" placeholder="${_pass}" id="inputPasswrd" />
                             <form:errors path="pass"/>
                         </div>
                         <div class="input-group">
-                            <spring:message code="entity.customer.name" var="c.name"/>
-                            <label class="sr-only" for="inputName">${c.login}</label>
-                            <form:input type="text" name="name" path="name" class="form-control" placeholder="${c.name}" id="inputName" />
+                            <spring:message code="entity.customer.name" var="_name"/>
+                            <label class="sr-only" for="inputName">${_name}</label>
+                            <form:input type="text" name="name" path="name" class="form-control" placeholder="${_name}" id="inputName" />
                             <form:errors path="name"/>
                         </div>
                         <div class="input-group">
-                            <spring:message code="entity.address.street" var="a.street"/>
-                            <label class="sr-only" for="inputStreet">${a.street}</label>
-                            <form:input type="text" name="street" path="street" class="form-control" placeholder="${a.street}" id="inputStreet" />
+                            <spring:message code="entity.address.street" var="_street"/>
+                            <label class="sr-only" for="inputStreet">${_street}</label>
+                            <form:input type="text" name="street" path="street" class="form-control" placeholder="${_street}" id="inputStreet" />
                             <form:errors path="street"/>
                         </div>
                         <div class="input-group">
-                            <spring:message code="entity.address.city" var="a.city"/>
-                            <label class="sr-only" for="inputCity">${a.city}</label>
-                            <form:input type="text" name="city" path="city" class="form-control" placeholder="${a.city}" id="inputCity" />
+                            <spring:message code="entity.address.city" var="_city"/>
+                            <label class="sr-only" for="inputCity">${_city}</label>
+                            <form:input type="text" name="city" path="city" class="form-control" placeholder="${_city}" id="inputCity" />
                             <form:errors path="city"/>
                         </div>
                         <div class="input-group">
-                            <spring:message code="entity.address.appartment" var="a.appartment"/>
-                            <label class="sr-only" for="inputAppartment">${a.appartment}</label>
-                            <form:input type="text" name="appartment" path="appartment" class="form-control" placeholder="${a.appartment}" id="inputAppartment" />
+                            <spring:message code="entity.address.appartment" var="_appartment"/>
+                            <label class="sr-only" for="inputAppartment">${_appartment}</label>
+                            <form:input type="text" name="appartment" path="appartment" class="form-control" placeholder="${_appartment}" id="inputAppartment" />
                             <form:errors path="appartment"/>
                         </div>
                         <sec:authorize access="!isAuthenticated()">
                             <input type="submit" name="reg" value="<spring:message code="button.register"  />" class="btn btn-default"/>
                         </sec:authorize>
                         <sec:authorize access="isAuthenticated()">
-                            <input type="submit" name="save" value="<spring:message code="button.save.changes" />" class="btn btn-default"/>
+                            <input type="submit" name="save" value="<spring:message code="button.save" />" class="btn btn-default"/>
                         </sec:authorize>
                     </form:form>   
                 </div>

@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class SimpleUserService implements UserService {
 
-    private static final String DEFAULT_USER_ROLE = "ROLE_USER";
+    private static final String DEFAULT_NEW_USER_ROLE = "ROLE_USER";
     
     @Autowired
     private UserRepository userRepository;
@@ -36,8 +36,12 @@ public class SimpleUserService implements UserService {
     
     @Override
     public User findByLogin(String login) {
-        if(login == null) return null;
         return userRepository.findByLogin(login);
+    }
+    
+    @Override
+    public User findByLogin(String login, boolean fetchLazy) {
+        return userRepository.findByLogin(login, fetchLazy);
     }
 
     @Override
@@ -80,7 +84,7 @@ public class SimpleUserService implements UserService {
     }
     
     private User setDefaultUserRole(User user) {
-        UserRole defaultRole = userRoleService.findByAuthority(DEFAULT_USER_ROLE);
+        UserRole defaultRole = userRoleService.findByAuthority(DEFAULT_NEW_USER_ROLE);
         user.getRoles().add(defaultRole);
         return user;
     }

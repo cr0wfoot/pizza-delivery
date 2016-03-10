@@ -1,6 +1,8 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,22 +21,22 @@
                     <form:form action="save" method="post" class="form-inline navbar-form navbar-left">
                         <input type="hidden" name="id" value="${pizza.id}"/>
                         <div class="form-group">
-                            <spring:message code="entity.pizza.name" var="p.name"/>
-                            <label class="sr-only" for="inputPizzaName">${p.name}</label>
-                            <input type="text" name="name" value="${pizza.name}" class="form-control" placeholder="${p.name}" id="inputPizzaName" />
+                            <spring:message code="entity.pizza.name" var="_name"/>
+                            <label class="sr-only" for="inputPizzaName">${_name}</label>
+                            <input type="text" name="name" value="${pizza.name}" class="form-control" placeholder="${_name}" id="inputPizzaName" />
                         </div>
                         <div class="form-group">
-                            <spring:message code="entity.pizza.type" var="p.type"/>
-                            <label class="sr-only" for="inputPizzaType">${p.type}</label>
+                            <spring:message code="entity.pizza.type" var="_type"/>
+                            <label class="sr-only" for="inputPizzaType">${_type}</label>
                             <select class="form-control" name="type">
-                                <option>SEA</option>
-                                <option>MEAT</option>
-                                <option>VEGETARIAN</option>
+                                <c:forEach var="pt" items="${pizzaTypes}" >
+                                    <option>${pt}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         <div class="input-group">
-                            <spring:message code="entity.pizza.price" var="p.price"/>
-                            <input type="text" name="price" value="${pizza.price}" class="form-control" placeholder="${p.price}" id="inputPizzaPrice" />
+                            <spring:message code="entity.pizza.price" var="_price"/>
+                            <input type="text" name="price" value="${pizza.price}" class="form-control" placeholder="${_price}" id="inputPizzaPrice" />
                             <span class="input-group-addon">$</span>
                         </div>
                         <input type="submit" name="save" value="<spring:message code="button.save" />" class="btn btn-default"/>

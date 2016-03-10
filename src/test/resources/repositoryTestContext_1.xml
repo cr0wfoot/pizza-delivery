@@ -16,14 +16,19 @@
         http://www.springframework.org/schema/jdbc 
         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd"    
-    profile="dev">
+    profile="prod">
 
     <context:component-scan base-package="com.pizza.delivery"/>
        
-    <jdbc:embedded-database id="dataSource" type="H2">
-        <!--<jdbc:script location="classpath:META-INF/sql/schema.sql"/>
-        <jdbc:script location="classpath:META-INF/sql/db.pizza_delivery.sql"/>-->
-    </jdbc:embedded-database>
+    <context:property-placeholder location="classpath:/jdbc.properties" system-properties-mode="NEVER"/>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="username" value="${user}"/>
+        <property name="url" value="${url}"/>
+        <property name="initialSize" value="${size}"/>
+        <property name="driverClassName" value="${driver}"/>
+        <property name="password" value="${pass}"/>
+    </bean>
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -33,10 +38,8 @@
         <property name="packagesToScan" value="com.pizza.delivery.domain"/>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
             </props>
         </property>
     </bean>
@@ -44,5 +47,18 @@
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
     
     <tx:annotation-driven/>
+    
+    
+    <bean name="discountManager" class="com.pizza.delivery.domain.discounts.DiscountManager">
+        <property name="discounts">
+            <list>
+                <bean class="com.pizza.delivery.domain.discounts.DiscountForDiscountCard"/> 
+                <bean class="com.pizza.delivery.domain.discounts.DiscountForTheBiggestPizzaInOrder"/> 
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    
 
 </beans>

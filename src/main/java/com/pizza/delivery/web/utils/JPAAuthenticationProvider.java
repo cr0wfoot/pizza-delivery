@@ -31,7 +31,7 @@ public class JPAAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
         String login = auth.getName();
 	String pass = auth.getCredentials().toString();
-	User user = userservice.findByLogin(login);
+	User user = userservice.findByLogin(login, false);
         if (user != null && login.equals(user.getLogin()) && encoder.matches(pass, user.getPassword())) {
             List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
             Set<UserRole> userAutorities = user.getRoles();

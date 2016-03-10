@@ -7,8 +7,10 @@ public interface UserService {
     
     User findByLogin(String login);
     
+    User findByLogin(String login, boolean fetchLazy);
+    
     void registerNewUser(CustomerDTO customerDto);
     
     void updateUserInfo(CustomerDTO customerDto);
-    
+        
 }

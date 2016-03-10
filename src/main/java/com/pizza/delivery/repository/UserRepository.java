@@ -11,10 +11,12 @@ public interface UserRepository {
     
     User findByLogin(String login);
     
+    User findByLogin(String login, boolean fetchEager);
+    
     void update(User user);
     
     List<User> readAll();
     
     void delete(Long id);
-    
+
 }

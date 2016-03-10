@@ -4,12 +4,15 @@ import com.pizza.delivery.domain.entities.User;
 import com.pizza.delivery.repository.UserRepository;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class JpaUserRepository implements UserRepository {
+    
+    private static final boolean FETCH_TYPE_LAZY = true;
 
     @PersistenceContext
     private EntityManager em;
@@ -24,18 +27,14 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     public User read(Long id) {
-        if(id == null || id <= 0) {
-            return null;
-        }
+        if(id == null || id <= 0) { return null; }
         return em.find(User.class, id);
     }
 
     @Override
     @Transactional
     public void update(User user) {
-        if(user.getId() <= 0) {
-            return;
-        }
+        if(user == null || user.getId() <= 0) { return; }
         em.merge(user);
     }
 
@@ -55,14 +54,24 @@ public class JpaUserRepository implements UserRepository {
 
     @Override
     public User findByLogin(String login) {
-        if(login == null || login.isEmpty()) {
-            return null;
+        return findByLoginHelper(login, FETCH_TYPE_LAZY);
+    }
+    
+    @Override
+    public User findByLogin(String login, boolean fetchLazy) {
+        return findByLoginHelper(login, fetchLazy);
+    }
+    
+    private User findByLoginHelper(String login, boolean fetchLazy) {
+        if(login == null || login.isEmpty()) { return null; }
+        String query = "User.getByLoginFetchEager";
+        if(fetchLazy) {
+            query = "User.getByLogin";
         }
-        List<User> list =  em.createNamedQuery("User.getByLogin", User.class).setParameter("login", login).getResultList();
-        if(list.isEmpty()) {
+        try {
+            return em.createNamedQuery(query, User.class).setParameter("login", login).getSingleResult();
+        } catch(NoResultException ex) {
             return null;
-        } else {
-            return list.get(0);
         }
     }
     

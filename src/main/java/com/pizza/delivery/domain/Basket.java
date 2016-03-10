@@ -4,7 +4,11 @@ import com.pizza.delivery.domain.entities.Pizza;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope("session")
 public class Basket {
     
     private Map<Pizza, Integer> pizzas = new HashMap<Pizza, Integer>();

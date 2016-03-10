@@ -8,6 +8,8 @@ public interface CustomerService {
     
     Customer find(Long id);
     
+    Customer find(Long id, boolean fetchLazy);
+    
     List<Customer> findAll();
     
     void update(Customer customer);

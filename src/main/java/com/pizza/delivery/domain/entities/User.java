@@ -9,6 +9,7 @@ import javax.persistence.*;
 @NamedQueries({
     @NamedQuery(name = "User.getAll", query = "select u from User u"),
     @NamedQuery(name = "User.getByLogin", query = "select u from User u where u.login = :login"),
+    @NamedQuery(name = "User.getByLoginFetchEager", query = "select u from User u join fetch u.roles join fetch u.customer where u.login = :login"),
     @NamedQuery(name = "User.deleteById", query = "delete from User where id = :id")})
 public class User {
 
@@ -27,7 +28,9 @@ public class User {
     @Column(name = "active")
     private Boolean active;
     
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, 
+              orphanRemoval = true,
+              fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
     

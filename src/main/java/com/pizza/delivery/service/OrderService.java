@@ -16,4 +16,8 @@ public interface OrderService {
     
     List<PizzaOrder> showOrders();
     
+    PizzaOrder showOrder(Long id);
+    
+    PizzaOrder showOrder(Long id, boolean fetchLazy);
+    
 }
