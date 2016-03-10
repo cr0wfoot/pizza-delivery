@@ -30,6 +30,14 @@ public class PizzaController {
         return pizza;
     }
     
+    @ModelAttribute("pizza2")
+    public Pizza getDto(@RequestParam(value = "id", required = false) Long id) {
+        Pizza p = new Pizza();
+        if(id != null)
+            p = pizzaService.find(id);
+        return p;
+    }
+    
     //@Lookup
     @ModelAttribute
     Basket createBasket() { return new Basket(); }
@@ -57,9 +65,10 @@ public class PizzaController {
     }
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String add(@Valid Pizza pizza, Model model, BindingResult result, RedirectAttributes attr) {
+    public String add(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result,  Model model, RedirectAttributes attr) {
         if (result.hasErrors()) {
-            return "userform";
+            model.addAttribute("pizzaTypes", getPizzaTypes());
+            return "pizzaform";
         }
         attr.addFlashAttribute("success", true);
         pizzaService.save(pizza);

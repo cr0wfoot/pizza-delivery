@@ -18,12 +18,13 @@
             <div class="panel panel-info">
                 <div class="panel-heading"><spring:message code="pizzaform.message" /></div>
                 <div class="panel-body">
-                    <form:form action="save" method="post" class="form-inline navbar-form navbar-left">
+                    <form:form action="save" method="post" class="form-inline navbar-form navbar-left" commandName="pizza">
                         <input type="hidden" name="id" value="${pizza.id}"/>
                         <div class="form-group">
                             <spring:message code="entity.pizza.name" var="_name"/>
                             <label class="sr-only" for="inputPizzaName">${_name}</label>
-                            <input type="text" name="name" value="${pizza.name}" class="form-control" placeholder="${_name}" id="inputPizzaName" />
+                            <form:input type="text" name="name" path="name" value="${pizza.name}" class="form-control" placeholder="${_name}" id="inputPizzaName" />
+                            <form:errors path="name"/>
                         </div>
                         <div class="form-group">
                             <spring:message code="entity.pizza.type" var="_type"/>
@@ -36,8 +37,9 @@
                         </div>
                         <div class="input-group">
                             <spring:message code="entity.pizza.price" var="_price"/>
-                            <input type="text" name="price" value="${pizza.price}" class="form-control" placeholder="${_price}" id="inputPizzaPrice" />
+                            <form:input type="text" name="price" path="price" value="${pizza.price}" class="form-control" placeholder="${_price}" id="inputPizzaPrice" />
                             <span class="input-group-addon">$</span>
+                            <form:errors path="price"/>
                         </div>
                         <input type="submit" name="save" value="<spring:message code="button.save" />" class="btn btn-default"/>
                     </form:form>   

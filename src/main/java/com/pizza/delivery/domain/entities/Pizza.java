@@ -24,7 +24,7 @@ public class Pizza {
     
     @Column(name = "name")
     @NotBlank(message="Name cannot be blank.")
-    @Pattern(regexp="^\\w{4,}$", message="Name can only consist of numbers, letters and the underscore character.")
+    @Pattern(regexp="^\\w{3,}$", message="Name can only consist of numbers, letters and the underscore character.")
     private String name;
     
     @Column(name = "price")

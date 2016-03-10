@@ -154,7 +154,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", login=" + login + ", roles=" + roles + '}';
+        return "User{" + "id=" + id + ", login=" + login;
     }
 
 }
