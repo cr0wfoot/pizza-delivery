@@ -15,7 +15,6 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String error(Exception e, Model model) {
-        e.printStackTrace();
         logger.error(e);
         model.addAttribute("ex", e);
         return "error";

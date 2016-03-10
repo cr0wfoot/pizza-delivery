@@ -5,7 +5,6 @@ import com.pizza.delivery.domain.dto.CustomerDTO;
 import com.pizza.delivery.domain.entities.Pizza;
 import com.pizza.delivery.domain.entities.Pizza.PizzaType;
 import com.pizza.delivery.service.PizzaService;
-import com.pizza.delivery.service.UserService;
 import java.util.Arrays;
 import java.util.List;
 import javax.validation.Valid;
@@ -30,15 +29,7 @@ public class PizzaController {
         return pizza;
     }
     
-    @ModelAttribute("pizza2")
-    public Pizza getDto(@RequestParam(value = "id", required = false) Long id) {
-        Pizza p = new Pizza();
-        if(id != null)
-            p = pizzaService.find(id);
-        return p;
-    }
-    
-    //@Lookup
+    @Lookup
     @ModelAttribute
     Basket createBasket() { return new Basket(); }
     
