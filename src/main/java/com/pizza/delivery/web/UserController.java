@@ -27,7 +27,7 @@ public class UserController {
         if (principal == null) {
             return new User();
         }
-        return userService.findByLogin(principal.getName());
+        return userService.findByLogin(principal.getName(), false);
     }
     
     @RequestMapping(value="/registration", method = RequestMethod.GET)

@@ -26,12 +26,13 @@ public class PizzaController {
     
     @ModelAttribute("pizza")
     public Pizza findPizza(@RequestParam(value = "id", required = false) Pizza pizza) {
+        if(pizza == null) return new Pizza();
         return pizza;
     }
     
     @Lookup
     @ModelAttribute
-    Basket createBasket() { return new Basket(); }
+    Basket createBasket() { return null; }
     
     private List<PizzaType> getPizzaTypes() {
         return Arrays.asList(PizzaType.values());
@@ -43,14 +44,14 @@ public class PizzaController {
         return "pizzas";
     }
     
-    @RequestMapping(value = "/pizza", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String findById(Pizza pizza) {
-        return pizza.toString();
+    public String findById(@PathVariable Long id) {
+        return pizzaService.find(id).toString();
     }
     
     @RequestMapping(value="/create", method = RequestMethod.GET)
-    public String create(Model model) {
+    public String create(Model model, Pizza pizza) {
         model.addAttribute("pizzaTypes", getPizzaTypes());
         return "pizzaform";
     }

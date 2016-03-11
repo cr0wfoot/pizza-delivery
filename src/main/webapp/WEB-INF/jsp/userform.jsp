@@ -12,6 +12,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
+        <%@include file="navi.jsp" %>
         <br>
         <div class="container">
             <div class="panel panel-info">
@@ -24,12 +25,14 @@
                             <form:input type="text" name="login" path="login" class="form-control" placeholder="${_login}" id="inputLogin" />
                             <form:errors path="login"/>
                         </div>
-                        <div class="form-group">
-                            <spring:message code="entity.user.pass" var="_pass"/>
-                            <label class="sr-only" for="inputPasswrd">${_pass}</label>
-                            <form:input type="text" name="pass" path="pass" class="form-control" placeholder="${_pass}" id="inputPasswrd" />
-                            <form:errors path="pass"/>
-                        </div>
+                        <sec:authorize access="!isAuthenticated()">
+                            <div class="form-group">
+                                <spring:message code="entity.user.pass" var="_pass"/>
+                                <label class="sr-only" for="inputPasswrd">${_pass}</label>
+                                <form:input type="text" name="pass" path="pass" class="form-control" placeholder="${_pass}" id="inputPasswrd" />
+                                <form:errors path="pass"/>
+                            </div>
+                        </sec:authorize>
                         <div class="input-group">
                             <spring:message code="entity.customer.name" var="_name"/>
                             <label class="sr-only" for="inputName">${_name}</label>

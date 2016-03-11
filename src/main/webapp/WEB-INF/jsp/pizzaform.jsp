@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,6 +13,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
+        <%@include file="navi.jsp" %>
         <br>
         <div class="container">
             <div class="panel panel-info">
@@ -30,6 +31,7 @@
                             <spring:message code="entity.pizza.type" var="_type"/>
                             <label class="sr-only" for="inputPizzaType">${_type}</label>
                             <select class="form-control" name="type">
+                                <option>${pizza.type}</option>
                                 <c:forEach var="pt" items="${pizzaTypes}" >
                                     <option>${pt}</option>
                                 </c:forEach>

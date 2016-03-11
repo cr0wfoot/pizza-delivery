@@ -13,10 +13,11 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     </head>
     <body>
+        <%@include file="navi.jsp" %>
         <br>
         <div class="container">
             <div class="panel panel-primary">
-                <div class="panel-heading"><a href="./basket" class="btn btn-success"><span class="badge">${basket.quantity}</span><i class="glyphicon glyphicon-shopping-cart"></i></a></div>
+                <div class="panel-heading"></div>
                 <table class="panel-body table table-striped table-bordered table-hover">
                     <thead class="thead-inverse">
                         <tr>
@@ -35,7 +36,7 @@
                     <c:forEach var="p" items="${pizzas}" >
                         <tr>
                             <th>${p.id}</th>
-                            <td>${p.name}</td>
+                            <td><a href="${p.id}">${p.name}</a></td>
                             <td>${p.type}</td>
                             <td>${p.price}</td>
                             <td>
@@ -60,9 +61,18 @@
                                         <input id="submitRemove${p.id}" type="submit" name="remove" value="del" class="hidden" />
                                     </form:form>
                                 </td>
-                            </sec:authorize>
+                            </sec:authorize>  
                         </tr>
                     </c:forEach>
+                    <sec:authorize access="hasRole('ROLE_ADMIN')">
+                        <tr>
+                            <td colspan="7">
+                                <a href="create" class="btn btn-default">
+                                    <spring:message code="button.create" />
+                                </a>
+                            </td>
+                        </tr>
+                    </sec:authorize>
                     </tbody>
                 </table>
             </div>      
