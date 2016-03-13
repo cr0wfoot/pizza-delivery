@@ -30,12 +30,11 @@
                         <div class="form-group">
                             <spring:message code="entity.pizza.type" var="_type"/>
                             <label class="sr-only" for="inputPizzaType">${_type}</label>
-                            <select class="form-control" name="type">
-                                <option>${pizza.type}</option>
-                                <c:forEach var="pt" items="${pizzaTypes}" >
-                                    <option>${pt}</option>
-                                </c:forEach>
-                            </select>
+                            <form:select class="form-control" path="type">
+                                <form:option class="form-control" value=""/>
+                                <form:options class="form-control" items="${pizzaTypes}"/>
+                            </form:select>
+                            <form:errors path="type"/>
                         </div>
                         <div class="input-group">
                             <spring:message code="entity.pizza.price" var="_price"/>

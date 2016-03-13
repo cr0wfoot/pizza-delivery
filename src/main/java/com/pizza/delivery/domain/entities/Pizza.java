@@ -2,6 +2,7 @@ package com.pizza.delivery.domain.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -23,15 +24,17 @@ public class Pizza {
     private Long id;
     
     @Column(name = "name")
-    @NotBlank(message="Name cannot be blank.")
-    @Pattern(regexp="^\\w{3,}$", message="Name can only consist of numbers, letters and the underscore character.")
+    @NotBlank(message = "Name cannot be blank.")
+    @Pattern(regexp="^(|[A-Z][A-Za-z0-9-\\.\\s]+)$", message="Name can only consist of numbers, letters and the underscore character.")
     private String name;
     
     @Column(name = "price")
+    @NotNull(message = "Price cannot be blank.")
     @Digits(message = "Format must be xxx.xx", fraction = 2, integer = 3)
     private Double price;
     
     @Column(name = "type")
+    @NotNull(message = "Type cannot be blank.")
     @Enumerated(EnumType.STRING)
     private PizzaType type;
 

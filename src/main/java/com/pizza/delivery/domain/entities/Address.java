@@ -143,7 +143,8 @@ public class Address implements Cloneable {
     
     @Override
     public String toString() {
-        return city + ", " + street + ", " + appartment + "apt.";
+        if(city.isEmpty() && street.isEmpty() && appartment.isEmpty()) { return ""; } 
+        else { return city + ", " + street + ", " + appartment + "apt."; }
     }
 
     @Override

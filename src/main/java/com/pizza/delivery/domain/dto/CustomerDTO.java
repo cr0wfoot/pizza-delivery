@@ -7,28 +7,28 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class CustomerDTO {
     
-    @Pattern(regexp="^\\w{4,}$", message="Name can only consist of letters.")
+    @Pattern(regexp="^(|[A-Z]'?([a-zA-Z]|\\.| |-)+)$", message="Name can only consist of letters.")
     private String name;
     
-    @Pattern(regexp="^\\w{4,}$", message="City can only consist of letters.")
+    @Pattern(regexp="^(|[a-zA-Z]+(?:[\\s-][a-zA-Z]+)*)$", message="City is invalid.")
     private String city;
     
-    @Pattern(regexp="^\\w{4,}$", message="Street can only consist of numbers, letters and the underscore character.")
+    @Pattern(regexp="^(|[A-Z]'?([a-zA-Z0-9]|\\.| |-)+[0-9])$", message="Street is invalid.")
     private String street;
     
-    @Pattern(regexp="^\\w{4,}$", message="Appartment can only consist of numbers, letters and the underscore character.")
+    @Pattern(regexp="^(|[1-9][0-9A-Za-z-\\s/]{0,})$", message="Appartment is invalid.")
     private String appartment;
     
     private Long customerId;
     
-    @NotBlank(message="Username cannot be blank.")
-    @Size(min=4, max=15, message="Username must be between 4 and 10 characters long.")
-    @Pattern(regexp="^\\w{4,}$", message="Username can only consist of numbers, letters and the underscore character.")
+    @NotBlank(message="Username can not be blank.")
+    @Size(min=3, max=16, message="Username must be between 3 and 16 characters long.")
+    @Pattern(regexp="^[a-zA-Z0-9_-]+$", message="Username can only consist of numbers, letters and the underscore character.")
     private String login;
     
     @NotBlank(message="Pass cannot be blank.")
-    @Size(min=4, max=15, message="Pass must be between 4 and 10 characters long.")
-    @Pattern(regexp="^\\w{4,}$", message="Pass can only consist of numbers, letters and the underscore character.")
+    @Size(min=5, max=18, message="Password must be between 6 and 18 characters long.")
+    @Pattern(regexp="^[a-zA-Z0-9_-]+$", message="Pass can only consist of numbers, letters and the underscore character.")
     private String pass;
     
     private Long userId;

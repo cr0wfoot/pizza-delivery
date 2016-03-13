@@ -4,12 +4,13 @@ import com.pizza.delivery.domain.OrderState;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "orders")
 @NamedQueries({
     @NamedQuery(name = "PizzaOrder.getAll", query = "select po from PizzaOrder po"),
-    @NamedQuery(name = "PizzaOrder.getByIdFetchEager", query = "select po from PizzaOrder po join fetch po.details join fetch po.address where po.id = :id"),
+    @NamedQuery(name = "PizzaOrder.getByIdFetchEager", query = "select po from PizzaOrder po join fetch po.details where po.id = :id"),
     @NamedQuery(name = "PizzaOrder.deleteById", query = "delete from PizzaOrder where id = :id")})
 public class PizzaOrder {
     
@@ -20,6 +21,7 @@ public class PizzaOrder {
     private Long id;
     
     @Column(name = "order_state")
+    @NotNull(message = "Type cannot be blank.")
     @Enumerated(EnumType.STRING)
     private OrderState state;
     
@@ -30,7 +32,7 @@ public class PizzaOrder {
     @JoinColumn(name = "customer_id")
     private Customer customer;
     
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     @JoinColumn(name = "address_id")
     private Address address;
 
