@@ -94,7 +94,7 @@ public class PizzaController {
      * @return 
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String add(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result,  Model model, RedirectAttributes attr) {
+    public String save(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result,  Model model, RedirectAttributes attr) {
         if (result.hasErrors()) {
             model.addAttribute("pizzaTypes", getPizzaTypes());
             return "pizzaform";

@@ -28,11 +28,11 @@ public class SimplePizzaService implements PizzaService {
     @Override
     @Transactional
     @Secured("ROLE_ADMIN")
-    public void save(Pizza p) {
-        if(p.getId() == null) {
-            pizzaRepository.create(p);
+    public void save(Pizza pizza) {
+        if(pizza.getId() == null) {
+            pizzaRepository.create(pizza);
         } else {
-            pizzaRepository.update(p);
+            pizzaRepository.update(pizza);
         }
     }
 

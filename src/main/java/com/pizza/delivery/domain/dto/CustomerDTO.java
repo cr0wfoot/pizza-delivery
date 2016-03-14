@@ -1,6 +1,7 @@
 package com.pizza.delivery.domain.dto;
 
 import com.pizza.delivery.domain.entities.User;
+import com.pizza.delivery.domain.validation.UniqueLogin;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
@@ -30,10 +31,11 @@ public class CustomerDTO {
     @NotBlank(message="Username can not be blank.")
     @Size(min=3, max=16, message="Username must be between 3 and 16 characters long.")
     @Pattern(regexp="^[a-zA-Z0-9_-]+$", message="Username can only consist of numbers, letters and the underscore character.")
+    @UniqueLogin(message = "Login has already taken.")
     private String login;
     
     @NotBlank(message="Pass cannot be blank.")
-    @Size(min=5, max=18, message="Password must be between 6 and 18 characters long.")
+    @Size(min=5, max=18, message="Password must be between 5 and 18 characters long.")
     @Pattern(regexp="^[a-zA-Z0-9_-]+$", message="Pass can only consist of numbers, letters and the underscore character.")
     private String pass;
     

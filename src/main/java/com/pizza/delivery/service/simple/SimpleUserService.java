@@ -52,9 +52,7 @@ public class SimpleUserService implements UserService {
     @Override
     @Transactional
     public void registerNewUser(CustomerDTO customerDto) {
-        if(customerDto == null) return;
-        if(userRepository.findByLogin(customerDto.getLogin()) != null) 
-            throw new IllegalArgumentException();
+        if(customerDto == null) { return; }
         Customer customer = customerService.createNewCustomer(customerDto);
         User user = getUserFromDTO(customerDto);
         user = setDefaultUserRole(user);
@@ -65,7 +63,7 @@ public class SimpleUserService implements UserService {
     @Override
     @Transactional
     public void updateUserInfo(CustomerDTO customerDto) {
-        if(customerDto == null) return;
+        if(customerDto == null) { return; }
         User user = getUserFromDTO(customerDto);
         Customer customer = customerService.getCustomerFromDTO(customerDto);
         user.setCustomer(customer);
@@ -75,7 +73,7 @@ public class SimpleUserService implements UserService {
     
     @Transactional(readOnly = true)
     private User getUserFromDTO(CustomerDTO customerDto) {
-        if(customerDto == null) return new User();
+        if(customerDto == null) { return new User(); }
         User user = null;
         if(customerDto.getUserId() != null) {
             user = userRepository.read(customerDto.getUserId());
