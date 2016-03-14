@@ -3,7 +3,7 @@ package com.pizza.delivery.domain.entities;
 import javax.persistence.*;
 
 /**
- * Entity: discount card of customer
+ * Entity: discount card of customer, belongs to customer
  * @see Customer
  */
 @Entity

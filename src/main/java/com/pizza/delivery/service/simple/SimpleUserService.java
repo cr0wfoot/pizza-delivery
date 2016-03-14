@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.pizza.delivery.service.simple;
 
 import com.pizza.delivery.domain.dto.CustomerDTO;
@@ -17,6 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Simple implementation, interacts with user layer, work with customer service, 
+ * user role service, password encoder
+ * @see User
+ * @see UserRepository
+ * @see UserRoleService
+ * @see CustomerService
+ * @see PasswordEncoder
+ */
 @Service
 public class SimpleUserService implements UserService {
 

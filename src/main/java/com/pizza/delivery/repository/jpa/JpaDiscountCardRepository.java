@@ -8,6 +8,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * JPA implementation, interacts with DiscountCard
+ * @see DiscountCard
+ */
 @Repository
 public class JpaDiscountCardRepository implements DiscountCardRepository {
 

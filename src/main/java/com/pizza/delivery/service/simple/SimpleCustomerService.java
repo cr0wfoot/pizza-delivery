@@ -11,6 +11,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Simple implementation, interacts with customer layer
+ * @see Customer
+ * @see CustomerRepository
+ */
 @Service
 public class SimpleCustomerService implements CustomerService {
     

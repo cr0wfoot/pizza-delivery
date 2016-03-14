@@ -7,11 +7,21 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Controller advice used to handle exceptions
+ * @author Alex
+ */
 @ControllerAdvice
 public class ExceptionControllerAdvice {
     
     private final static Logger logger = Logger.getLogger(ExceptionControllerAdvice.class);
     
+    /**
+     * Handles all exceptions
+     * @param e
+     * @param model
+     * @return 
+     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String error(Exception e, Model model) {

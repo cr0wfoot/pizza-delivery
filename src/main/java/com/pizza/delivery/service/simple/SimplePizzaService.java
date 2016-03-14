@@ -9,6 +9,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Simple implementation, interacts with pizza layer
+ * @see Pizza
+ * @see PizzaOrderRepository
+ */
 @Service
 public class SimplePizzaService implements PizzaService {
 

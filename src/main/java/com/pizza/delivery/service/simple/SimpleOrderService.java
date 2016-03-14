@@ -22,6 +22,16 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Simple implementation, interacts with order layer, work with pizza service, discount card service, customer service
+ * and discount manager
+ * @see PizzaOrder
+ * @see PizzaOrderRepository
+ * @see PizzaService
+ * @see DiscountCardService
+ * @see CustomerService
+ * @see DiscountManager
+ */
 @Service
 public class SimpleOrderService implements OrderService {
     

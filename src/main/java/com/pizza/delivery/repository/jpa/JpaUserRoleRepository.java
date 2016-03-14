@@ -7,6 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+/**
+ * JPA implementation, interacts with UserRole
+ * @see UserRole
+ */
 @Repository
 public class JpaUserRoleRepository implements UserRoleRepository {
 

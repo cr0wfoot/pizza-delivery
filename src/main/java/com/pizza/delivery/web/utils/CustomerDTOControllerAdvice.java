@@ -8,12 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+/**
+ * Controller advice used to provide CustomerDTO in model
+ * @see UserService
+ * @see CustomerDTO
+ */
 @ControllerAdvice
 public class CustomerDTOControllerAdvice {
     
     @Autowired
     private UserService userService;
     
+    /**
+     * Provide CustomerDTO in model
+     * @param principal
+     * @return 
+     */
     @ModelAttribute("customerDto")
     public CustomerDTO getDto(Principal principal) {
         CustomerDTO customerDto = new CustomerDTO();

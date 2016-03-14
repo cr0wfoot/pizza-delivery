@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Web controller for handling requests related with user
+ * @see UserService
+ */
 @Controller
 @RequestMapping(value="/user/")
 public class UserController {
@@ -22,6 +26,11 @@ public class UserController {
     @Autowired
     private UserService userService;
     
+    /**
+     * Provides user in model
+     * @param principal
+     * @return 
+     */
     @ModelAttribute()
     public User getUser(Principal principal) {
         if (principal == null) {
@@ -30,11 +39,23 @@ public class UserController {
         return userService.findByLogin(principal.getName(), false);
     }
     
+    /**
+     * Handles requests to registration page
+     * @return 
+     */
     @RequestMapping(value="/registration", method = RequestMethod.GET)
     public String registration() {
         return "userform";
     }
     
+    /**
+     * Handles requests for registrating new user or updating current one
+     * @param customerDto an object of class CustomerDTO
+     * @param result
+     * @param attr
+     * @param submit
+     * @return 
+     */
     @RequestMapping(value = "/accept", method = RequestMethod.POST)
     public String register(@Valid @ModelAttribute("customerDto") CustomerDTO customerDto, 
                             BindingResult result, 
@@ -53,11 +74,22 @@ public class UserController {
         } 
     }
     
+    /**
+     * Handles requests to user form page
+     * @param model
+     * @param customerDto an object of class CustomerDTO
+     * @return 
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String edit(Model model, @ModelAttribute("customerDto") CustomerDTO customerDto) {
         return "userform";
     }
 
+    /**
+     * Handles requests to user info page
+     * @param user an object of class User
+     * @return 
+     */
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String showProfilePage(@ModelAttribute User user) {
         return "profile";

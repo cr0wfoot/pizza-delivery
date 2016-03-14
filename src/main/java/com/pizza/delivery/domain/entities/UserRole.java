@@ -2,6 +2,10 @@ package com.pizza.delivery.domain.entities;
 
 import javax.persistence.*;
 
+/**
+ * Entity: user's role, belongs to user.
+ * @see User
+ */
 @Entity
 @Table(name = "authorities")
 @NamedQueries({
@@ -17,9 +21,16 @@ public class UserRole {
     @Column(name = "authority")
     private String authority;
 
+    /**
+     * An empty constructor
+     */
     public UserRole() {
     }
 
+    /**
+     * Initialize field: authority
+     * @param authority 
+     */
     public UserRole(String authority) {
         this.authority = authority;
     }

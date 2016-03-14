@@ -18,6 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Represents implementation of AuthenticationProvider interface which 
+ * retrieve user information for authentication from databases.
+ * @see UserService
+ * @see PasswordEncoder
+ */
 @Component("JPAAuthProvider")
 public class JPAAuthenticationProvider implements AuthenticationProvider {
 
@@ -27,6 +33,7 @@ public class JPAAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Override
     @Transactional(readOnly = true)
     public Authentication authenticate(Authentication auth) throws AuthenticationException {
         String login = auth.getName();
@@ -43,6 +50,7 @@ public class JPAAuthenticationProvider implements AuthenticationProvider {
         throw new BadCredentialsException("Bad credentials");
     }
 
+    @Override
     public boolean supports(Class<?> type) {
         return type.equals(UsernamePasswordAuthenticationToken.class);
     }

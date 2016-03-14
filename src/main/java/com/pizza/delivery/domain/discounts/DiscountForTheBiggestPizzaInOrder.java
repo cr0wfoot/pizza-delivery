@@ -4,6 +4,10 @@ import com.pizza.delivery.domain.entities.OrderDetails;
 import com.pizza.delivery.domain.entities.PizzaOrder;
 import java.util.Set;
 
+/**
+ * Discount for the most expensive pizza in order, 30% from pizza's price,
+ * only if order has at least 4 pizzas in it.
+ */
 public class DiscountForTheBiggestPizzaInOrder implements Discount {
 
     private static final int PIZZAS_COUNT_FOR_DISCOUNTS = 4;

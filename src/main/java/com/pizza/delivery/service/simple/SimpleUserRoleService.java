@@ -6,6 +6,11 @@ import com.pizza.delivery.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Simple implementation, interacts with user role layer
+ * @see UserRole
+ * @see UserRoleRepository
+ */
 @Service
 public class SimpleUserRoleService implements UserRoleService {
 

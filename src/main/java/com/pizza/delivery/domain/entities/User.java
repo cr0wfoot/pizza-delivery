@@ -4,6 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 
+/**
+ * Entity: user, contains authority roles, has customer. 
+ * @see UserRole
+ * @see Customer
+ */
 @Entity
 @Table(name = "users")
 @NamedQueries({
@@ -41,6 +46,9 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private Set<UserRole> roles = new HashSet<UserRole>();
 
+    /**
+     * An empty constructor
+     */
     public User() {
     }
     

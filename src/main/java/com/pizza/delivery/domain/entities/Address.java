@@ -3,8 +3,9 @@ package com.pizza.delivery.domain.entities;
 import javax.persistence.*;
 
 /**
- * Entity: customer's address
+ * Entity: Address, belongs to customer or to order
  * @see Customer
+ * @see PizzaOrder
  */
 @Entity
 @Table(name = "addresses")

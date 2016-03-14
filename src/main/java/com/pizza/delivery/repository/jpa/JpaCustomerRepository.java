@@ -8,6 +8,10 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * JPA implementation, interacts with Customer
+ * @see Customer
+ */
 @Repository
 public class JpaCustomerRepository implements CustomerRepository {
     

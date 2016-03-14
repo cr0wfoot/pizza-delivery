@@ -9,6 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Simple implementation, interacts with discount card layer, work with customer service
+ * @see DiscountCard
+ * @see DiscountCardRepository
+ * @see CustomerService
+ */
 @Service
 public class SimpleDiscountCardService implements DiscountCardService {
 

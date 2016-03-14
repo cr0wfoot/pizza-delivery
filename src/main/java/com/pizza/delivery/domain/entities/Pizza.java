@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * Entity: pizza
+ * Entity: pizza,  independent, has type PizzaType
  * @see PizzaType
  */
 @Entity

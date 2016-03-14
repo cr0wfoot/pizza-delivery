@@ -6,6 +6,14 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Entity: order, contains pizzas represented by OrderDetails and Address, belongs to Customer, has state OrderState
+ * @see Customer
+ * @see Pizza
+ * @see OrderDetails
+ * @see Address
+ * @see OrderState
+ */
 @Entity
 @Table(name = "orders")
 @NamedQueries({
@@ -64,6 +72,10 @@ public class PizzaOrder {
         this.details = details;
     }
     
+    /**
+     * Calculates total price
+     * @return the double value of total price
+     */
     public Double getTotalPrice() {
         Double totalPrice = 0.0;
         for(OrderDetails d : details) {
@@ -73,6 +85,10 @@ public class PizzaOrder {
         return totalPrice;
     }
     
+    /**
+     * Add pizza represented by OrderDetails
+     * @param details an object of class OrderDetails
+     */
     public void addDetails(Set<OrderDetails> details) {
         this.details.addAll(details);
     }
@@ -95,31 +111,51 @@ public class PizzaOrder {
         this.address = address;
     }
     
+    /**
+     * Get the value of current price
+     * @return the value of current price
+     */
     public Double getPrice() {
         return price;
     }
 
+    /**
+     * Set the value of current price
+     * @param price the value of current price
+     */
     public void setPrice(Double price) {
         this.price = price;
     }
     
+    /**
+     * Get the value of state
+     * @return the value of state
+     */
     public OrderState getState() {
         return state;
     }
     
+    /**
+     * Set the value of state
+     * @param stateToChange the value of state
+     */
     public void setState(OrderState stateToChange) {
         this.state = stateToChange;
     }
     
     /**
-     * Get the value of pizzas
+     * Get the value of details
      *
-     * @return the value of pizzas
+     * @return the value of details
      */
     public Set<OrderDetails> getDetails() {
         return details;
     }
     
+    /**
+     * Set the value of details
+     * @param details the value of details
+     */
     public void setDetails(Set<OrderDetails> details) {
         this.details = details;
     }

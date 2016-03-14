@@ -5,6 +5,12 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
+/**
+ * DTO, contains information of User class, Customer class, Address class
+ * @see User
+ * @see Customer
+ * @see Address
+ */
 public class CustomerDTO {
     
     @Pattern(regexp="^(|[A-Z]'?([a-zA-Z]|\\.| |-)+)$", message="Name can only consist of letters.")
@@ -177,12 +183,20 @@ public class CustomerDTO {
         this.city = city;
     }
     
+    /**
+     * Check if address is complete, all fileds of class Address can not be empty
+     * @return true if Address is complete and false in the other case
+     */
     public boolean isAddressComplete() {
         return this.city != null && !this.city.isEmpty() && 
                this.appartment != null && !this.appartment.isEmpty() && 
                this.street != null && !this.street.isEmpty();
     }
     
+    /**
+     * Builds DTO from user's info
+     * @param user an object of class User
+     */
     public void buildDTOWithUser(User user) {
         if(user == null) return;
         this.userId = user.getId();
