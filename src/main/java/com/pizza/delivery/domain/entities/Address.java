@@ -13,8 +13,7 @@ public class Address implements Cloneable {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "pk_id_address", sequenceName = "pk_id_address", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_id_address")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @Column(name = "city")

@@ -24,8 +24,7 @@ public class PizzaOrder {
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "pk_id_order", sequenceName = "pk_id_order", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_id_order")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @Column(name = "order_state")

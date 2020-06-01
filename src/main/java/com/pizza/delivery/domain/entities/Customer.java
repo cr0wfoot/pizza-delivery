@@ -20,8 +20,7 @@ public class Customer {
     
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "pk_id_customer", sequenceName = "pk_id_customer", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_id_customer")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @Column(name = "name")

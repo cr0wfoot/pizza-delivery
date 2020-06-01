@@ -15,8 +15,7 @@ public class DiscountCard {
 
     @Id
     @Column(name="id")
-    @SequenceGenerator(name = "pk_id_card", sequenceName = "pk_id_card", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_id_card")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @Column(name="points")

@@ -20,8 +20,7 @@ public class User {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "pk_id_user", sequenceName = "pk_id_user", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_id_user")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     @Column(name = "login")
